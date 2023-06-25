@@ -12,11 +12,13 @@ app.use(bodyparser.json());
 //RUTAS
 const clientesRouter = require('./routes/clientes');
 const usuariosRouter = require('./routes/users');
+//vista citas del actor Estilista
+const estilistaCitasRouter = require('./routes/estilista/citas');
 
 //USAR RUTAS
 app.use('/api/clientes', clientesRouter);
 app.use('/api/usuarios', usuariosRouter);
-
+app.use('/api/estilista/citas', estilistaCitasRouter);
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // puerto del front
