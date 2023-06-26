@@ -20,7 +20,7 @@ async function getCitas(){
         "            JOIN servicios_por_cita spc on c.id_cita = spc.id_cita\n" +
         "            JOIN servicio_por_estilista spe on spc.id_servicio_por_estilista = spe.id_servicio_por_estilista\n" +
         "            JOIN servicio s on spe.id_servicio = s.id_servicio\n" +
-        "            JOIN estados e2 on c.id_estado = e2.id_estados"
+        "            JOIN estados e2 on c.id_estado = e2.id_estados")
     return citas;
 }
 async function actualizarEstadoCita(idEstado, idCita){
@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
             message: 'No se han encontrado clientes.'
         })
     }
-})
+});
 //actualizar estado Cita
 router.put('/actualizar_estado', async (req, res) =>{
     const idCita = req.body.id_cita;
