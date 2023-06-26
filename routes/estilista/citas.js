@@ -23,6 +23,11 @@ async function getCitas(){
         "            JOIN estados e2 on c.id_estado = e2.id_estados")
     return citas;
 }
+async function actualizarEstadoCita(idEstado, idCita){
+    const query = `UPDATE cita SET id_estado = ? WHERE id_cita = ?`;
+    const [actualizar] = await conn.query(query, [idEstado, idCita]);
+    return actualizar.affectedRows > 0;
+}
 //fetch all citas
 router.get('/', async (req, res) => {
 //(    // //PAGINACION
@@ -56,5 +61,22 @@ router.get('/', async (req, res) => {
         })
     }
 })
+//actualizar estado Cita
+router.put('/actualizar_estado', async (req, res) =>{
+    const idCita = req.body.id_cita;
+    const idEstado = req.body.id_estado;
 
+    try{
+       const result = await actualizarEstadoCita(idEstado, idCita);
+        if (result) {
+            res.json({ mensaje: 'Actualización exitosa' });
+        } else {
+            res.status(404).json({ mensaje: 'No se encontró el registro para actualizar' });
+        }
+    }
+    catch (error) {
+        console.error('Error al actualizar:', error);
+        res.status(500).json({ mensaje: 'Error al actualizar' });
+    }
+})
 module.exports = router;
