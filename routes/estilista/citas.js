@@ -20,7 +20,7 @@ async function getCitas(){
         "            JOIN servicios_por_cita spc on c.id_cita = spc.id_cita\n" +
         "            JOIN servicio_por_estilista spe on spc.id_servicio_por_estilista = spe.id_servicio_por_estilista\n" +
         "            JOIN servicio s on spe.id_servicio = s.id_servicio\n" +
-        "            JOIN estados e2 on c.id_estado = e2.id_estados")
+        "            JOIN estados e2 on c.id_estado = e2.id_estados WHERE c.id_estado != 4")
     return citas;
 };
 async function actualizarEstadoCita(idEstado, idCita){
@@ -28,6 +28,13 @@ async function actualizarEstadoCita(idEstado, idCita){
     const [actualizar] = await conn.query(query, [idEstado, idCita]);
     return actualizar.affectedRows > 0;
 };
+//POR AHORA SOLO ACTUALIZAR FECHA Y HORA
+//MAS ADELANTE SE DEBERIAN AÑADIR METODOS PARA ACTUALIZAR TANTO SERVICIO COMO ESTILISTA Y CLIENTE
+async function actualizarCita(fecha, hora, idCita){
+    const query = `UPDATE cita SET fecha = ?, hora = ? WHERE id_cita = ?`;
+    const [actualizar] = await conn.query(query, [fecha, hora, idCita]);
+    return actualizar.affectedRows > 0;
+}
 async function crearCita(fecha, hora, cliente, estado, dispo_estilista){
     const query = `INSERT INTO cita (fecha, hora, id_cliente, id_estado, id_disponibilidad_estilista) VALUES (?, ?, ?, ?, ?)`;
     const [nuevaCita] = await conn.query(query, [fecha, hora, cliente, estado, dispo_estilista]);
@@ -85,6 +92,24 @@ router.put('/actualizar_estado', async (req, res) =>{
         res.status(500).json({ mensaje: 'Error al actualizar' });
     }
 });
+router.post('/actualizar-cita', async (req, res) => {
+    const hora = req.body.hora;
+    const fecha = req.body.fecha;
+    const idCita = req.body.id_cita;
+
+    try{
+        const result = await actualizarCita(fecha, hora, idCita);
+        if (result) {
+            res.json({ mensaje: 'Actualización exitosa' });
+        } else {
+            res.status(404).json({ mensaje: 'No se encontró el registro para actualizar' });
+        }
+    }
+    catch (error) {
+        console.error('Error al actualizar:', error);
+        res.status(500).json({ mensaje: 'Error al actualizar' });
+    }
+})
 
 router.post('/nueva-cita', async (req,res) =>{
     const fecha = req.body.fecha;
