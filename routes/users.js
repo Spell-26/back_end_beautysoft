@@ -82,22 +82,22 @@ router.post('/', async (req, res) => {
 
 
 // Ruta para editar un usuario por su ID
-router.put('/:id', async (req, res) => {
-  try {
-    const usuarioId = req.params.id;
-    const { correo_usuario, nombre, apellido, contraseña } = req.body;
+// router.put('/:id', async (req, res) => {
+//   try {
+//     const usuarioId = req.params.id;
+//     const { correo_usuario, nombre, apellido, contraseña } = req.body;
 
-    const query = 'UPDATE usuario SET correo_usuario = ?, nombre = ?, apellido = ?, contrasena = ? WHERE id_usuario = ?';
-    const values = [correo_usuario, nombre, apellido, contraseña, usuarioId];
+//     const query = 'UPDATE usuario SET correo_usuario = ?, nombre = ?, apellido = ?, contrasena = ? WHERE id_usuario = ?';
+//     const values = [correo_usuario, nombre, apellido, contraseña, usuarioId];
 
-    await conn.query(query, values);
+//     await conn.query(query, values);
     
-    res.status(200).json({ message: 'Usuario actualizado exitosamente.' });
-  } catch (error) {
-    console.error('Error al editar el usuario:', error);
-    res.status(500).json({ error: 'Error al editar el usuario.' });
-  }
-});
+//     res.status(200).json({ message: 'Usuario actualizado exitosamente.' });
+//   } catch (error) {
+//     console.error('Error al editar el usuario:', error);
+//     res.status(500).json({ error: 'Error al editar el usuario.' });
+//   }
+// });
 
 
 
