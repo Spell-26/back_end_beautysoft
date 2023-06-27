@@ -42,7 +42,23 @@ router.post('/',(req,res)=>{
     const estado=req.body.estado;
     const telefono =req.body.telefono;
     const direccion =req.body.direccion;
+    const correo_usuario=req.body.correo;
+    const nombre=req.body.nombre;
+    const apellido=req.body.apellido;
+    const contrasena=req.body.contraseña;
+    const inserUsuarios = `Insert into usuario (correo_usuario, nombre, apellido, contrasena,estado, id_rol ) VALUES('${correo_usuario}', '${nombre}', '${apellido}', '${contrasena}', 1, 1)`
     const sql = `insert into cliente (correo_cliente, estado, telefono, direccion ) VALUES ('${correo}','${estado}', '${telefono}','${direccion}' )`
+    conexion.query(inserUsuarios, (error, results, fields) => {
+      if (error) {
+        console.error('Error al realizar la consulta:', error);
+      } else {
+        res.json({
+          status: 'usuario agregado'
+        });
+      }
+      
+      
+    });  
     conexion.query(sql, (error, results, fields) => {
         if (error) {
           console.error('Error al realizar la consulta:', error);
@@ -51,6 +67,8 @@ router.post('/',(req,res)=>{
               status: 'cliente agregado'
           });
         }
+
+
       });
 })
 
