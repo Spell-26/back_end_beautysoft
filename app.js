@@ -10,7 +10,7 @@ app.use(bodyparser.json());
 
 
 //RUTAS
-const clientesRouter = require('./routes/clientes');
+const clientesRouter = require('./routes/clientes/clientes');
 const usuariosRouter = require('./routes/users');
 //vista citas del actor Estilista
 const estilistaCitasRouter = require('./routes/estilista/citas');
