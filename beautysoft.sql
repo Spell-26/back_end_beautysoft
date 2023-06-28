@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 26-06-2023 a las 05:55:21
+-- Tiempo de generación: 27-06-2023 a las 06:38:44
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -48,7 +48,8 @@ INSERT INTO `bloque_asignado` (`id_bloque_asignado`, `id_cita`, `id_estilista`) 
 
 CREATE TABLE `cita` (
   `id_cita` int(11) NOT NULL,
-  `fecha_y_hora` datetime DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `id_estado` int(11) DEFAULT NULL,
   `id_disponibilidad_estilista` int(11) DEFAULT NULL,
@@ -61,9 +62,13 @@ CREATE TABLE `cita` (
 -- Volcado de datos para la tabla `cita`
 --
 
-INSERT INTO `cita` (`id_cita`, `fecha_y_hora`, `id_cliente`, `id_estado`, `id_disponibilidad_estilista`, `duracion_final`, `precio_final`, `creacion`) VALUES
-(1, '2023-06-26 09:30:00', 3, 1, 1, NULL, NULL, '2023-06-25'),
-(3, '2023-06-26 14:14:31', 2, 4, 1, '02:40:00', NULL, '2023-06-25');
+INSERT INTO `cita` (`id_cita`, `fecha`, `hora`, `id_cliente`, `id_estado`, `id_disponibilidad_estilista`, `duracion_final`, `precio_final`, `creacion`) VALUES
+(1, '2023-07-08', '21:30:00', 3, 2, 1, NULL, NULL, '2023-06-25'),
+(3, '2023-06-26', '19:00:00', 2, 2, 1, '02:40:00', NULL, '2023-06-25'),
+(11, '2023-07-26', '21:00:00', 1, 2, 1, NULL, NULL, '2023-06-26'),
+(12, '2023-06-29', '17:13:00', 10, 1, 1, NULL, NULL, '2023-06-26'),
+(13, '2023-06-29', '13:28:00', 4, 4, 1, NULL, NULL, '2023-06-26'),
+(14, '2023-07-06', '17:25:00', 3, 4, 1, NULL, NULL, '2023-06-26');
 
 -- --------------------------------------------------------
 
@@ -267,7 +272,11 @@ INSERT INTO `servicios_por_cita` (`id_servicios_por_cita`, `id_servicio_por_esti
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),
-(4, 3, 3);
+(4, 3, 3),
+(13, 1, 11),
+(14, 1, 12),
+(15, 1, 13),
+(16, 1, 14);
 
 -- --------------------------------------------------------
 
@@ -460,7 +469,7 @@ ALTER TABLE `bloque_asignado`
 -- AUTO_INCREMENT de la tabla `cita`
 --
 ALTER TABLE `cita`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -520,7 +529,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `servicios_por_cita`
 --
 ALTER TABLE `servicios_por_cita`
-  MODIFY `id_servicios_por_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_servicios_por_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio_por_estilista`
