@@ -6,8 +6,7 @@ const router = express.Router();
 //Find cliente
 router.get('/', (req,res)=>{
     const sql = `SELECT U.nombre, U.apellido,r.nombre_rol,c.id_cliente, C.correo_cliente, C.telefono, C.direccion 
-    FROM cliente C JOIN usuario U ON C.correo_cliente = U.correo_usuario 
-    JOIN rol r ON U.id_rol = r.id_rol;`;
+    FROM cliente C JOIN usuario U ON C.correo_cliente = U.correo_usuario JOIN rol r ON U.id_rol = r.id_rol`
 
 conexion.query(sql, (error, results, fields) => {
   if (error) {
@@ -60,15 +59,7 @@ router.post('/',(req,res)=>{
       
     });  
     conexion.query(sql, (error, results, fields) => {
-        if (error) {
-          console.error('Error al realizar la consulta:', error);
-        } else {
-          res.json({
-              status: 'cliente agregado'
-          });
-        }
-
-
+      
       });
 })
 
