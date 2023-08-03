@@ -5,7 +5,7 @@ const router = express.Router();
 
 //Find cliente
 router.get('/', (req,res)=>{
-    const sql = `SELECT U.nombre, U.apellido,r.nombre_rol,c.id_cliente, C.correo_cliente, C.telefono, C.direccion 
+    const sql = `SELECT U.nombre, U.apellido,r.nombre_rol,c.id_cliente, C.correo_cliente, C.telefono, c.direccion
     FROM cliente C JOIN usuario U ON C.correo_cliente = U.correo_usuario JOIN rol r ON U.id_rol = r.id_rol`
 
 conexion.query(sql, (error, results, fields) => {
@@ -80,19 +80,38 @@ conexion.query(sql,[id], (error, results, fields) => {
 })
 
 //Modificar
-router.put('/',(req, res)=>{
-    
-    const{id, correo} = req.body
+router.put('/:id',(req, res)=>{
+    const id= req.params.id
+    const{ correo} = req.body
 
     let sql = `update cliente set correo_cliente ='${correo}' where id_cliente = '${id}'`
     
     conexion.query(sql, (err, rows, fields)=>{
         if(err) throw err
         else{
-            res.json({status: 'cliente modificado'})
+            res.json({
+              id,
+              correo
+            })
         }
     })
 
 })
+
+router.put('/estado/:idEstado', (req, res)=>{
+  const idEstado=req.params.id;
+  const estado=req.body.estado;
+  let consulta =`update cliente set estado = 1 where id_cliente = '${idEstado}'`
+  conexion.query(consulta,(error,rows,fields)=>{
+    if (error) {
+      console.error('Error al realizar la consulta:', error);
+    } else {
+      res.json({
+          status: 'Estado cambiado'
+      });
+    }
+      });
+  })
+
 
 module.exports = router
